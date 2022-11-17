@@ -1,0 +1,17 @@
+:root {
+  --primary: #f3b54a;
+  --secondary: #6e7889;
+  --dark: #393b45;
+  --light: #f8f8f8;
+}
+
+.header {
+  text-align: center;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 100%;
+}
