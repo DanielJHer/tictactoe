@@ -1,19 +1,19 @@
 "use strict";
 
-const gameBoard = (function () {
-  let boardArray = ["", "", "", "", "", "", "", "", ""];
-  let symbol = "x";
+const gameBoard = (() => {
+  let boardArray = ["X", "", "", "", "", "", "", "", ""];
+  let symbol = "X";
   let isPlaying = false;
-  let currentPlayer = undefined;
+  let currentPlayer = "Player 1";
 
   const squares = document.querySelectorAll(".board-square");
+  const squaresArray = Array.from(squares);
 
   const startGame = () => {
     isPlaying = true;
-    currentPlayer = undefined;
+    // currentPlayer = player1;
     // currentPlayer.makeGlow();
 
-    const squaresArray = Array.from(squares);
     squaresArray.forEach((square) => {
       square.addEventListener("click", (e) => {
         let index = squaresArray.indexOf(square);
@@ -36,6 +36,7 @@ const gameBoard = (function () {
     });
   };
 
+  // ends the game
   const endGame = () => {
     // display winner message
     alert(`${currentPlayer} has Won!`);
@@ -49,6 +50,7 @@ const gameBoard = (function () {
     });
   };
 
+  // changes the turn following a move
   const changeTurn = () => {
     symbol = symbol === "x" ? "o" : "x";
     currentPlayer.removeGlow();
@@ -56,6 +58,7 @@ const gameBoard = (function () {
     currentPlayer.makeGlow();
   };
 
+  // marks the div
   const fillSquare = (index) => {
     boardArray[index] = symbol;
 
@@ -65,6 +68,7 @@ const gameBoard = (function () {
     squares[index].appendChild(spanText);
   };
 
+  // clears the array for a restart
   const clearBoard = () => {
     boardArray = ["", "", "", "", "", "", "", "", ""];
     squares.forEach((square) => {
@@ -72,6 +76,7 @@ const gameBoard = (function () {
     });
   };
 
+  // checks if there's a win
   const checkWinCondition = () => {
     if (
       (boardArray[0] === symbol &&
@@ -100,6 +105,8 @@ const gameBoard = (function () {
         boardArray[6] === symbol)
     ) {
       return true;
+    } else {
+      return false;
     }
   };
 
@@ -108,6 +115,9 @@ const gameBoard = (function () {
 
 gameBoard.startGame();
 
-const factoryPlayer = (name, sideID, type) => {
+const factoryPlayer = ((name, sideID, type) => {
+  const makeGlow = () => {
+    isSecureContext;
+  };
   return {};
-};
+})();
