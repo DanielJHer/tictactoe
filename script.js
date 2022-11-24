@@ -6,7 +6,7 @@ const gameBoard = (() => {
   let isPlaying = false;
   let currentPlayer = "Player 1";
 
-  const squares = document.querySelectorAll(".board-square");
+  const squares = document.querySelectorAll(".cell");
   const squaresArray = Array.from(squares);
 
   const startGame = () => {
