@@ -1,50 +1,51 @@
 "use strict";
 
 const gameBoard = (() => {
+  // starting conditions
   let boardArray = ["", "", "", "", "", "", "", "", ""];
   let symbol = "X";
   let currentPlayer;
 
+  // selecting DOM elements
   const cells = document.querySelectorAll(".cell");
   const cellsArray = Array.from(cells);
-  const player1 = document.querySelector(".player1");
-  const player2 = document.querySelector(".player2");
+  const player1Div = document.querySelector(".player1");
+  const player2Div = document.querySelector(".player2");
   const winningMsg = document.querySelector(".winning-message");
   const restartBtn = document.querySelector("#restartBtn");
   const winText = document.querySelector(".winText");
 
   const startGame = () => {
     // starting round
-    currentPlayer = player1;
+    currentPlayer = player1Div;
     highlight(currentPlayer);
 
-    // adding eventlisteners and game logic
+    // adding game logic
     cellsArray.forEach((cell) => {
       cell.addEventListener("click", (e) => {
         let index = cellsArray.indexOf(cell);
         if (boardArray[index] === "") {
           markCell(index);
           boardArray[index] = symbol;
-          if (checkWinCondition() && symbol === "X") {
-            // Win
-            winText.insertAdjacentText("afterbegin", `Player 1 Wins!`);
-            endGame();
-          } else if (checkWinCondition() && symbol === "O") {
-            // Lose
-            winText.insertAdjacentText("afterbegin", `Player 2 Wins!`);
+          if (checkWinCondition()) {
+            // Win or Lose
+            symbol === "X"
+              ? winText.insertAdjacentText("afterbegin", `Player 1 Wins!`)
+              : winText.insertAdjacentText("afterbegin", `Player 2 Wins!`);
             endGame();
           } else if (boardArray.filter((elem) => elem).length === 9) {
             // Draw
             winText.insertAdjacentText("afterbegin", `It's a draw!`);
             endGame();
           } else {
-            // Lose turn
+            // Next turn
             changeTurn();
           }
         }
       });
     });
 
+    // restart button
     restartBtn.addEventListener("click", (e) => {
       winningMsg.classList.remove("show");
       restartGame();
@@ -61,17 +62,11 @@ const gameBoard = (() => {
     player.classList.remove("highlight");
   };
 
-  // ends the game
-  const endGame = () => {
-    // display winner message
-    winningMsg.classList.add("show");
-  };
-
   // changes the turn following a move
   const changeTurn = () => {
     symbol = symbol === "X" ? "O" : "X";
     removeHighlight(currentPlayer);
-    currentPlayer = currentPlayer === player1 ? player2 : player1;
+    currentPlayer = currentPlayer === player1Div ? player2Div : player1Div;
     highlight(currentPlayer);
   };
 
@@ -91,6 +86,12 @@ const gameBoard = (() => {
     cells.forEach((square) => {
       square.innerHTML = "";
     });
+  };
+
+  // ends the game
+  const endGame = () => {
+    // display message
+    winningMsg.classList.add("show");
   };
 
   // checks if there's a win
@@ -130,4 +131,5 @@ const gameBoard = (() => {
 
 gameBoard.startGame();
 
+// optimize highlight code
 // change win message to reflect winning player
