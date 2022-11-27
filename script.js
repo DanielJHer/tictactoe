@@ -1,77 +1,94 @@
 "use strict";
 
 const gameBoard = (() => {
-  let boardArray = ["X", "", "", "", "", "", "", "", ""];
+  let boardArray = ["", "", "", "", "", "", "", "", ""];
   let symbol = "X";
-  let isPlaying = false;
-  let currentPlayer = "Player 1";
+  let currentPlayer;
 
-  const squares = document.querySelectorAll(".cell");
-  const squaresArray = Array.from(squares);
+  const cells = document.querySelectorAll(".cell");
+  const cellsArray = Array.from(cells);
+  const player1 = document.querySelector(".player1");
+  const player2 = document.querySelector(".player2");
+  const winningMsg = document.querySelector(".winning-message");
+  const restartBtn = document.querySelector("#restartBtn");
+  const winText = document.querySelector(".winText");
 
   const startGame = () => {
-    isPlaying = true;
-    // currentPlayer = player1;
-    // currentPlayer.makeGlow();
+    // starting round
+    currentPlayer = player1;
+    highlight(currentPlayer);
 
-    squaresArray.forEach((square) => {
-      square.addEventListener("click", (e) => {
-        let index = squaresArray.indexOf(square);
-        if (isPlaying && boardArray[index] === "") {
-          fillSquare(index);
-          if (checkWinCondition()) {
+    // adding eventlisteners and game logic
+    cellsArray.forEach((cell) => {
+      cell.addEventListener("click", (e) => {
+        let index = cellsArray.indexOf(cell);
+        if (boardArray[index] === "") {
+          markCell(index);
+          boardArray[index] = symbol;
+          if (checkWinCondition() && symbol === "X") {
             // Win
-            isPlaying = false;
+            winText.insertAdjacentText("afterbegin", `Player 1 Wins!`);
             endGame();
-          } else if (boardArray.filter((elem) => elem.length === 9)) {
+          } else if (checkWinCondition() && symbol === "O") {
+            // Lose
+            winText.insertAdjacentText("afterbegin", `Player 2 Wins!`);
+            endGame();
+          } else if (boardArray.filter((elem) => elem).length === 9) {
             // Draw
-            isPlaying = false;
+            winText.insertAdjacentText("afterbegin", `It's a draw!`);
             endGame();
           } else {
-            // Did not win
+            // Lose turn
             changeTurn();
           }
         }
       });
     });
+
+    restartBtn.addEventListener("click", (e) => {
+      winningMsg.classList.remove("show");
+      restartGame();
+      changeTurn();
+    });
+  };
+
+  // highlights current player
+  const highlight = (player) => {
+    player.classList.add("highlight");
+  };
+
+  const removeHighlight = (player) => {
+    player.classList.remove("highlight");
   };
 
   // ends the game
   const endGame = () => {
     // display winner message
-    alert(`${currentPlayer} has Won!`);
-    // render reset button
-    const resetBtn = document.createElement("button");
-    const mainGrid = document.querySelector(".main-grid");
-    mainGrid.appendChild(resetBtn);
-    resetBtn.addEventListener("click", (e) => {
-      setTimeout(clearBoard(), 1800);
-      resetBtn.classList.add("remove");
-    });
+    winningMsg.classList.add("show");
   };
 
   // changes the turn following a move
   const changeTurn = () => {
-    symbol = symbol === "x" ? "o" : "x";
-    currentPlayer.removeGlow();
+    symbol = symbol === "X" ? "O" : "X";
+    removeHighlight(currentPlayer);
     currentPlayer = currentPlayer === player1 ? player2 : player1;
-    currentPlayer.makeGlow();
+    highlight(currentPlayer);
   };
 
-  // marks the div
-  const fillSquare = (index) => {
+  // marks the div and adds to array
+  const markCell = (index) => {
     boardArray[index] = symbol;
 
     let spanText = document.createElement("span");
-    spanText.classList.add("text");
     spanText.innerText = symbol;
-    squares[index].appendChild(spanText);
+    cells[index].appendChild(spanText);
   };
 
   // clears the array for a restart
-  const clearBoard = () => {
+  const restartGame = () => {
     boardArray = ["", "", "", "", "", "", "", "", ""];
-    squares.forEach((square) => {
+    winText.innerText = "";
+    cells.forEach((square) => {
       square.innerHTML = "";
     });
   };
@@ -105,8 +122,6 @@ const gameBoard = (() => {
         boardArray[6] === symbol)
     ) {
       return true;
-    } else {
-      return false;
     }
   };
 
@@ -115,9 +130,4 @@ const gameBoard = (() => {
 
 gameBoard.startGame();
 
-const factoryPlayer = ((name, sideID, type) => {
-  const makeGlow = () => {
-    isSecureContext;
-  };
-  return {};
-})();
+// change win message to reflect winning player

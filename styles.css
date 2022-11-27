@@ -17,12 +17,15 @@
   justify-content: center;
 }
 
-.player1 {
-  padding: 100px;
+.player1,
+.player2 {
+  margin: 85px;
+  padding: 18px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.player2 {
-  padding: 100px;
+.highlight {
+  outline: 2px solid black;
 }
 
 .board {
@@ -37,10 +40,12 @@
 .cell {
   width: var(--cell-size);
   height: var(--cell-size);
-  border: 1px solid black;
+  border: 1.5px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
 }
 
 .cell:first-child,
@@ -74,19 +79,21 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(53, 52, 52, 0.9);
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 5rem;
+  font-size: 3rem;
+  font-family: Arial, Helvetica, sans-serif;
   flex-direction: column;
 }
 
 .winning-message button {
-  font-size: 3rem;
+  font-size: 1rem;
   background-color: white;
   border: 1px solid black;
   padding: 0.25em 0.5em;
+  margin-top: 15px;
   cursor: pointer;
 }
 
