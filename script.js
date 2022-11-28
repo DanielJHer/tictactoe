@@ -79,7 +79,7 @@ const gameBoard = (() => {
     cells[index].appendChild(spanText);
   };
 
-  // clears the array for a restart
+  // clears the array and gameboard for a restart
   const restartGame = () => {
     boardArray = ["", "", "", "", "", "", "", "", ""];
     winText.innerText = "";
