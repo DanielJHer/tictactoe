@@ -107,6 +107,10 @@
   display: flex;
 }
 
+.enterPlayerForm {
+  display: flex;
+}
+
 footer {
   display: flex;
   justify-content: right;

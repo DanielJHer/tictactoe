@@ -132,4 +132,8 @@ const gameBoard = (() => {
 gameBoard.startGame();
 
 // optimize highlight code
+
 // change win message to reflect winning player
+// 1. display form that takes in input and stores in var
+// 2. dispaly var in player div
+// 3. render var into win message
