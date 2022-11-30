@@ -32,9 +32,13 @@ const gameBoard = (() => {
       } else {
         enterPlayerForm.classList.add("hide");
       }
+      console.log(player1Div.innerHTML);
 
       // renders players names
-      player1Div.innerHTML === `${player1Name}`;
+      player1Div.innerHTML = "";
+      player2Div.innerHTML = "";
+      player1Div.insertAdjacentHTML("afterbegin", `${player1Name}`);
+      player2Div.insertAdjacentHTML("afterbegin", `${player2Name}`);
 
       // adding game logic
       cellsArray.forEach((cell) => {
