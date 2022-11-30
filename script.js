@@ -14,25 +14,16 @@ const gameBoard = (() => {
   const winningMsg = document.querySelector(".winning-message");
   const restartBtn = document.querySelector("#restartBtn");
   const winText = document.querySelector(".winText");
-  const form = document.querySelector("#form");
-  const enterPlayerForm = document.querySelector(".enterPlayerForm");
 
   const startGame = () => {
     // starting round
     currentPlayer = player1Div;
     highlight(currentPlayer);
 
-    // store name as variable
+    // storing name as variable
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const player1Name = form.elements[0].value;
-      const player2Name = form.elements[1].value;
-      if (player1Name === "" || player2Name === "") {
-        alert("Please enter your names!");
-      } else {
-        enterPlayerForm.classList.add("hide");
-      }
-      return player1Name;
+      factoryPlayer.storeName();
     });
 
     // adding game logic
@@ -45,7 +36,10 @@ const gameBoard = (() => {
           if (checkWinCondition()) {
             // Win or Lose
             symbol === "X"
-              ? winText.insertAdjacentText("afterbegin", `${player1Name} Wins!`)
+              ? winText.insertAdjacentText(
+                  "afterbegin",
+                  `${factoryPlayer.returnName()} Wins!`
+                )
               : winText.insertAdjacentText(
                   "afterbegin",
                   `${player2Name} Wins!`
@@ -149,8 +143,26 @@ const gameBoard = (() => {
 
 gameBoard.startGame();
 
-const player = ((name) => {
-  const renderName = (name) => {};
+const factoryPlayer = (() => {
+  const form = document.querySelector("#form");
+  const enterPlayerForm = document.querySelector(".enterPlayerForm");
+
+  const storeName = () => {
+    const player1Name = form.elements[0].value;
+    const player2Name = form.elements[1].value;
+    console.log(player1Name);
+    if (player1Name === "" || player2Name === "") {
+      alert("Please enter your names!");
+    } else {
+      enterPlayerForm.classList.add("hide");
+    }
+  };
+
+  const returnName = () => {
+    return this.player1Name;
+  };
+
+  return { storeName, returnName };
 })();
 
 // optimize highlight code
