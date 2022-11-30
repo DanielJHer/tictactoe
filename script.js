@@ -32,7 +32,6 @@ const gameBoard = (() => {
       } else {
         enterPlayerForm.classList.add("hide");
       }
-      console.log(player1Div.innerHTML);
 
       // renders players names
       player1Div.innerHTML = "";
@@ -97,10 +96,8 @@ const gameBoard = (() => {
     highlight(currentPlayer);
   };
 
-  // marks the div and adds to array
+  // marks the div
   const markCell = (index) => {
-    boardArray[index] = symbol;
-
     let spanText = document.createElement("span");
     spanText.innerText = symbol;
     cells[index].appendChild(spanText);
@@ -157,5 +154,3 @@ const gameBoard = (() => {
 })();
 
 gameBoard.startGame();
-
-// optimize highlight code
