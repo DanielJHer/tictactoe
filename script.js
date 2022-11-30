@@ -14,6 +14,8 @@ const gameBoard = (() => {
   const winningMsg = document.querySelector(".winning-message");
   const restartBtn = document.querySelector("#restartBtn");
   const winText = document.querySelector(".winText");
+  const form = document.querySelector("#form");
+  const enterPlayerForm = document.querySelector(".enterPlayerForm");
 
   const startGame = () => {
     // starting round
@@ -23,37 +25,46 @@ const gameBoard = (() => {
     // storing name as variable
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      factoryPlayer.storeName();
-    });
+      const player1Name = form.elements[0].value;
+      const player2Name = form.elements[1].value;
+      if (player1Name === "" || player2Name === "") {
+        alert("Please enter your names!");
+      } else {
+        enterPlayerForm.classList.add("hide");
+      }
 
-    // adding game logic
-    cellsArray.forEach((cell) => {
-      cell.addEventListener("click", (e) => {
-        let index = cellsArray.indexOf(cell);
-        if (boardArray[index] === "") {
-          markCell(index);
-          boardArray[index] = symbol;
-          if (checkWinCondition()) {
-            // Win or Lose
-            symbol === "X"
-              ? winText.insertAdjacentText(
-                  "afterbegin",
-                  `${factoryPlayer.returnName()} Wins!`
-                )
-              : winText.insertAdjacentText(
-                  "afterbegin",
-                  `${player2Name} Wins!`
-                );
-            endGame();
-          } else if (boardArray.filter((elem) => elem).length === 9) {
-            // Draw
-            winText.insertAdjacentText("afterbegin", `It's a draw!`);
-            endGame();
-          } else {
-            // Next turn
-            changeTurn();
+      // renders players names
+      player1Div.innerHTML === `${player1Name}`;
+
+      // adding game logic
+      cellsArray.forEach((cell) => {
+        cell.addEventListener("click", (e) => {
+          let index = cellsArray.indexOf(cell);
+          if (boardArray[index] === "") {
+            markCell(index);
+            boardArray[index] = symbol;
+            if (checkWinCondition()) {
+              // Win or Lose
+              symbol === "X"
+                ? winText.insertAdjacentText(
+                    "afterbegin",
+                    `${player1Name} Wins!`
+                  )
+                : winText.insertAdjacentText(
+                    "afterbegin",
+                    `${player2Name} Wins!`
+                  );
+              endGame();
+            } else if (boardArray.filter((elem) => elem).length === 9) {
+              // Draw
+              winText.insertAdjacentText("afterbegin", `It's a draw!`);
+              endGame();
+            } else {
+              // Next turn
+              changeTurn();
+            }
           }
-        }
+        });
       });
     });
 
@@ -142,27 +153,5 @@ const gameBoard = (() => {
 })();
 
 gameBoard.startGame();
-
-const factoryPlayer = (() => {
-  const form = document.querySelector("#form");
-  const enterPlayerForm = document.querySelector(".enterPlayerForm");
-
-  const storeName = () => {
-    const player1Name = form.elements[0].value;
-    const player2Name = form.elements[1].value;
-    console.log(player1Name);
-    if (player1Name === "" || player2Name === "") {
-      alert("Please enter your names!");
-    } else {
-      enterPlayerForm.classList.add("hide");
-    }
-  };
-
-  const returnName = () => {
-    return this.player1Name;
-  };
-
-  return { storeName, returnName };
-})();
 
 // optimize highlight code
