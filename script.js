@@ -14,11 +14,26 @@ const gameBoard = (() => {
   const winningMsg = document.querySelector(".winning-message");
   const restartBtn = document.querySelector("#restartBtn");
   const winText = document.querySelector(".winText");
+  const form = document.querySelector("#form");
+  const enterPlayerForm = document.querySelector(".enterPlayerForm");
 
   const startGame = () => {
     // starting round
     currentPlayer = player1Div;
     highlight(currentPlayer);
+
+    // store name as variable
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const player1Name = form.elements[0].value;
+      const player2Name = form.elements[1].value;
+      if (player1Name === "" || player2Name === "") {
+        alert("Please enter your names!");
+      } else {
+        enterPlayerForm.classList.add("hide");
+      }
+      return player1Name;
+    });
 
     // adding game logic
     cellsArray.forEach((cell) => {
@@ -30,8 +45,11 @@ const gameBoard = (() => {
           if (checkWinCondition()) {
             // Win or Lose
             symbol === "X"
-              ? winText.insertAdjacentText("afterbegin", `Player 1 Wins!`)
-              : winText.insertAdjacentText("afterbegin", `Player 2 Wins!`);
+              ? winText.insertAdjacentText("afterbegin", `${player1Name} Wins!`)
+              : winText.insertAdjacentText(
+                  "afterbegin",
+                  `${player2Name} Wins!`
+                );
             endGame();
           } else if (boardArray.filter((elem) => elem).length === 9) {
             // Draw
@@ -131,9 +149,8 @@ const gameBoard = (() => {
 
 gameBoard.startGame();
 
-// optimize highlight code
+const player = ((name) => {
+  const renderName = (name) => {};
+})();
 
-// change win message to reflect winning player
-// 1. display form that takes in input and stores in var
-// 2. dispaly var in player div
-// 3. render var into win message
+// optimize highlight code
