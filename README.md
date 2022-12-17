@@ -1,6 +1,6 @@
 # tictactoe
 
-Live Demo: https://danielherstictactoe.netlify.app
+<a href= 'https://danielherstictactoe.netlify.app'>Live Demo!</a>
 
 Tic Tac Toe game developed using Vanilla JS, HTML, and CSS.
 
